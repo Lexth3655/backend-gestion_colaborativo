@@ -13,13 +13,13 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "C.Persistence", "C.Persiste
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "D.Api", "D.Api", "{124EB620-C46B-4493-AD9A-4966ADFBEB6C}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UMicro.Domain", "UMicro.Domain\UMicro.Domain.csproj", "{4B49E44D-5F57-42DA-B89E-746242CD6355}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UMicro.Domain", "UMicro.Domain\UMicro.Domain.csproj", "{4B49E44D-5F57-42DA-B89E-746242CD6355}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UMicro.Core", "UMicro.Core\UMicro.Core.csproj", "{B2D2A9B4-92AB-4D2C-A91C-7C0D87761A12}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UMicro.Core", "UMicro.Core\UMicro.Core.csproj", "{B2D2A9B4-92AB-4D2C-A91C-7C0D87761A12}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UMicro.Persistence", "UMicro.Persistence\UMicro.Persistence.csproj", "{3E01902F-0EDE-4E1F-A573-3F7F7AA60427}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UMicro.Persistence", "UMicro.Persistence\UMicro.Persistence.csproj", "{3E01902F-0EDE-4E1F-A573-3F7F7AA60427}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UMicro.Api", "UMicro.Api\UMicro.Api.csproj", "{6D4A9F82-BFFB-41E8-B445-AB161099E4A3}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UMicro.Api", "UMicro.Api\UMicro.Api.csproj", "{6D4A9F82-BFFB-41E8-B445-AB161099E4A3}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
