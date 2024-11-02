@@ -15,8 +15,4 @@
     <ProjectReference Include="..\UMicro.Persistence\UMicro.Persistence.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Controllers\" />
-  </ItemGroup>
-
 </Project>

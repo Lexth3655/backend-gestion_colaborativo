@@ -1,5 +1,10 @@
-﻿using System;
+﻿/*
+Fecha de Creacion: 27-10-2024
+Autor: Roberto Alexander Toloza 
+ */
+using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -18,6 +23,11 @@ namespace UMicro.Domain.Modelo
         public int tiempo_invertido { get; set; }
         public int id_proyecto { get; set; }
         public int id_usuario_propietario { get; set; }
-        
+
+        public int tablero_id { get; set; }
+        public TableroKanban Tablero { get; set; }
+
+        public ICollection<Sub_Tarea> subtareas { get; set; } = new List<Sub_Tarea>();
+
     }
 }

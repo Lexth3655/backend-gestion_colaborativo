@@ -15,7 +15,7 @@ namespace UMicro.Persistence
         
             var serviceProvider = services.BuildServiceProvider();
             var configuration = serviceProvider.GetService<IConfiguration>();
-            services.AddDbContext<ApplicationDbContext>(opt => opt.UseSqlServer(configuration["sql:cnx"]));
+            services.AddDbContext<ApplicationDbContext>(opt => opt.UseSqlServer(configuration["DefaultConnection"]));
             services.AddTransient<IUnitOfWork, UnitOfWork>();
             services.AddAutoMapper(config =>
             {

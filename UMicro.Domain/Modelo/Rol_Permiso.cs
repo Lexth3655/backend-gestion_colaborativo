@@ -1,4 +1,8 @@
-﻿using System;
+﻿/*
+Fecha de Creacion: 27-10-2024
+Autor: Roberto Alexander Toloza 
+ */
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;

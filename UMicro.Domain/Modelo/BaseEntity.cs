@@ -8,7 +8,7 @@ namespace UMicro.Domain.Modelo
 {
     public class BaseEntity
     {
-        public string id { get; set; }
+        public int id { get; set; }
         public DateTime fecha_creado{ get; set; }
         public DateTime fecha_modificado{ get; set; }        
         public bool activo {  get; set; }
