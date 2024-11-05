@@ -11,12 +11,14 @@ using System.Threading.Tasks;
 
 namespace UMicro.Domain.Modelo
 {
-    public class Rol_Permiso
+    public class Rol_Permiso: BaseEntity
     {
         public int id_rol {  get; set; }
         public int id_permiso { get; set; }
 
         //relacion de navegacion con rol y permiso
         public Rol rol { get; set; }
+
+        public Rol_Permiso rol_Permiso { get; set; }
     }
 }
