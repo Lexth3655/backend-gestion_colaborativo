@@ -14,5 +14,8 @@ namespace UMicro.Domain.Modelo
     {
         public string nombreP {  get; set; }
         public string descripcionP { get; set; }
+
+        // Colección de la relación N a N
+        public ICollection<Rol_Permiso> RolPermiso { get; set; } = new List<Rol_Permiso>();
     }
 }

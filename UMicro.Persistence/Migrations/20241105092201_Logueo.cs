@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace UMicro.Persistence.Migrations
 {
     /// <inheritdoc />
-    public partial class PrimerAvacnce : Migration
+    public partial class Logueo : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -91,31 +91,24 @@ namespace UMicro.Persistence.Migrations
                 name: "rol_Permisos",
                 columns: table => new
                 {
-                    id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
                     id_rol = table.Column<int>(type: "int", nullable: false),
-                    id_permiso = table.Column<int>(type: "int", nullable: false),
-                    rolid = table.Column<int>(type: "int", nullable: false),
-                    rol_Permisoid = table.Column<int>(type: "int", nullable: false),
-                    fecha_creado = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    fecha_modificado = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    activo = table.Column<bool>(type: "bit", nullable: false)
+                    id_permiso = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_rol_Permisos", x => x.id);
+                    table.PrimaryKey("PK_rol_Permisos", x => new { x.id_rol, x.id_permiso });
                     table.ForeignKey(
-                        name: "FK_rol_Permisos_rol_Permisos_rol_Permisoid",
-                        column: x => x.rol_Permisoid,
-                        principalTable: "rol_Permisos",
+                        name: "FK_rol_Permisos_permisos_id_permiso",
+                        column: x => x.id_permiso,
+                        principalTable: "permisos",
                         principalColumn: "id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
-                        name: "FK_rol_Permisos_rols_rolid",
-                        column: x => x.rolid,
+                        name: "FK_rol_Permisos_rols_id_rol",
+                        column: x => x.id_rol,
                         principalTable: "rols",
                         principalColumn: "id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -187,25 +180,25 @@ namespace UMicro.Persistence.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_proyectoUsuarioRols", x => new { x.proyecto_id, x.usuario_id, x.rol_id });
+                    table.PrimaryKey("PK_proyectoUsuarioRols", x => new { x.usuario_id, x.proyecto_id, x.rol_id });
                     table.ForeignKey(
                         name: "FK_proyectoUsuarioRols_proyectos_proyectoPURid",
                         column: x => x.proyectoPURid,
                         principalTable: "proyectos",
                         principalColumn: "id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_proyectoUsuarioRols_rols_rolPURid",
                         column: x => x.rolPURid,
                         principalTable: "rols",
                         principalColumn: "id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_proyectoUsuarioRols_usuarios_usuario_id",
                         column: x => x.usuario_id,
                         principalTable: "usuarios",
                         principalColumn: "id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -244,19 +237,9 @@ namespace UMicro.Persistence.Migrations
                 column: "rolPURid");
 
             migrationBuilder.CreateIndex(
-                name: "IX_proyectoUsuarioRols_usuario_id",
-                table: "proyectoUsuarioRols",
-                column: "usuario_id");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_rol_Permisos_rol_Permisoid",
+                name: "IX_rol_Permisos_id_permiso",
                 table: "rol_Permisos",
-                column: "rol_Permisoid");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_rol_Permisos_rolid",
-                table: "rol_Permisos",
-                column: "rolid");
+                column: "id_permiso");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Sub_Tarea_tareaid",
@@ -278,9 +261,6 @@ namespace UMicro.Persistence.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "permisos");
-
-            migrationBuilder.DropTable(
                 name: "proyectoUsuarioRols");
 
             migrationBuilder.DropTable(
@@ -291,6 +271,9 @@ namespace UMicro.Persistence.Migrations
 
             migrationBuilder.DropTable(
                 name: "usuarios");
+
+            migrationBuilder.DropTable(
+                name: "permisos");
 
             migrationBuilder.DropTable(
                 name: "tareas");

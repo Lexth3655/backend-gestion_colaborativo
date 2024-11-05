@@ -12,10 +12,10 @@ namespace UMicro.Persistence
     {
         public static IServiceCollection AddPersistence(this IServiceCollection services)
         {
-        
+
             var serviceProvider = services.BuildServiceProvider();
             var configuration = serviceProvider.GetService<IConfiguration>();
-            services.AddDbContext<ApplicationDbContext>(opt => opt.UseSqlServer(configuration["DefaultConnection"]));
+            services.AddDbContext<ApplicationDbContext>(opt => opt.UseSqlServer(configuration["sql:cnx"]));
             services.AddTransient<IUnitOfWork, UnitOfWork>();
             services.AddAutoMapper(config =>
             {

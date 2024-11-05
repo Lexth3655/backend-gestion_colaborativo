@@ -15,20 +15,23 @@ namespace UMicro.Persistence.Data.Configuration
         public void Configure(EntityTypeBuilder<ProyectoUsuarioRol> builder)
         {
             //definicion compuesta de primary key
-            builder.HasKey(x => new { x.proyecto_id, x.usuario_id, x.rol_id});
+            builder.HasKey(x => new { x.usuario_id, x.proyecto_id, x.rol_id});
 
             //configuracion de la relaciones
-            builder.HasOne(x => x.proyectoPUR)
-                .WithMany(p => p.ProyectoUsuarioRols)
-                .HasPrincipalKey(x => x.id);
-
             builder.HasOne(x => x.usuarioPUR)
                 .WithMany(p => p.ProyectoUsuarioRols)
-                .HasPrincipalKey(x => x.id);
-            
+                .HasPrincipalKey(x => x.id)
+                .OnDelete(DeleteBehavior.Restrict); // Evitar cascadas en eliminaciones
+
+            builder.HasOne(x => x.proyectoPUR)
+                .WithMany(p => p.ProyectoUsuarioRols)
+                .HasPrincipalKey(x => x.id)
+                .OnDelete(DeleteBehavior.Restrict); // Evitar cascadas en eliminaciones
+
             builder.HasOne(x => x.rolPUR)
                 .WithMany(p => p.ProyectoUsuarioRols)
-                .HasPrincipalKey(x => x.id);
+                .HasPrincipalKey(x => x.id)
+                .OnDelete(DeleteBehavior.Restrict); // Evitar cascadas en eliminaciones
 
         }
     }

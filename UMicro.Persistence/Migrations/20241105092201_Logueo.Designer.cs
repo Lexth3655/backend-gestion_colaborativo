@@ -12,8 +12,8 @@ using UMicro.Persistence.Data;
 namespace UMicro.Persistence.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20241105074759_PrimerAvacnce")]
-    partial class PrimerAvacnce
+    [Migration("20241105092201_Logueo")]
+    partial class Logueo
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -93,10 +93,10 @@ namespace UMicro.Persistence.Migrations
 
             modelBuilder.Entity("UMicro.Domain.Modelo.ProyectoUsuarioRol", b =>
                 {
-                    b.Property<int>("proyecto_id")
+                    b.Property<int>("usuario_id")
                         .HasColumnType("int");
 
-                    b.Property<int>("usuario_id")
+                    b.Property<int>("proyecto_id")
                         .HasColumnType("int");
 
                     b.Property<int>("rol_id")
@@ -108,13 +108,11 @@ namespace UMicro.Persistence.Migrations
                     b.Property<int>("rolPURid")
                         .HasColumnType("int");
 
-                    b.HasKey("proyecto_id", "usuario_id", "rol_id");
+                    b.HasKey("usuario_id", "proyecto_id", "rol_id");
 
                     b.HasIndex("proyectoPURid");
 
                     b.HasIndex("rolPURid");
-
-                    b.HasIndex("usuario_id");
 
                     b.ToTable("proyectoUsuarioRols");
                 });
@@ -151,38 +149,15 @@ namespace UMicro.Persistence.Migrations
 
             modelBuilder.Entity("UMicro.Domain.Modelo.Rol_Permiso", b =>
                 {
-                    b.Property<int>("id")
-                        .ValueGeneratedOnAdd()
+                    b.Property<int>("id_rol")
                         .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("id"));
-
-                    b.Property<bool>("activo")
-                        .HasColumnType("bit");
-
-                    b.Property<DateTime>("fecha_creado")
-                        .HasColumnType("datetime2");
-
-                    b.Property<DateTime>("fecha_modificado")
-                        .HasColumnType("datetime2");
 
                     b.Property<int>("id_permiso")
                         .HasColumnType("int");
 
-                    b.Property<int>("id_rol")
-                        .HasColumnType("int");
+                    b.HasKey("id_rol", "id_permiso");
 
-                    b.Property<int>("rol_Permisoid")
-                        .HasColumnType("int");
-
-                    b.Property<int>("rolid")
-                        .HasColumnType("int");
-
-                    b.HasKey("id");
-
-                    b.HasIndex("rol_Permisoid");
-
-                    b.HasIndex("rolid");
+                    b.HasIndex("id_permiso");
 
                     b.ToTable("rol_Permisos");
                 });
@@ -359,19 +334,19 @@ namespace UMicro.Persistence.Migrations
                     b.HasOne("UMicro.Domain.Modelo.Proyecto", "proyectoPUR")
                         .WithMany("ProyectoUsuarioRols")
                         .HasForeignKey("proyectoPURid")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.HasOne("UMicro.Domain.Modelo.Rol", "rolPUR")
                         .WithMany("ProyectoUsuarioRols")
                         .HasForeignKey("rolPURid")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.HasOne("UMicro.Domain.Modelo.Usuario", "usuarioPUR")
                         .WithMany("ProyectoUsuarioRols")
                         .HasForeignKey("usuario_id")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.Navigation("proyectoPUR");
@@ -383,21 +358,21 @@ namespace UMicro.Persistence.Migrations
 
             modelBuilder.Entity("UMicro.Domain.Modelo.Rol_Permiso", b =>
                 {
-                    b.HasOne("UMicro.Domain.Modelo.Rol_Permiso", "rol_Permiso")
-                        .WithMany()
-                        .HasForeignKey("rol_Permisoid")
-                        .OnDelete(DeleteBehavior.Cascade)
+                    b.HasOne("UMicro.Domain.Modelo.Permiso", "Permiso")
+                        .WithMany("RolPermiso")
+                        .HasForeignKey("id_permiso")
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
-                    b.HasOne("UMicro.Domain.Modelo.Rol", "rol")
-                        .WithMany()
-                        .HasForeignKey("rolid")
-                        .OnDelete(DeleteBehavior.Cascade)
+                    b.HasOne("UMicro.Domain.Modelo.Rol", "Rol")
+                        .WithMany("RolPermiso")
+                        .HasForeignKey("id_rol")
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
-                    b.Navigation("rol");
+                    b.Navigation("Permiso");
 
-                    b.Navigation("rol_Permiso");
+                    b.Navigation("Rol");
                 });
 
             modelBuilder.Entity("UMicro.Domain.Modelo.Sub_Tarea", b =>
@@ -444,6 +419,11 @@ namespace UMicro.Persistence.Migrations
                     b.Navigation("Rols");
                 });
 
+            modelBuilder.Entity("UMicro.Domain.Modelo.Permiso", b =>
+                {
+                    b.Navigation("RolPermiso");
+                });
+
             modelBuilder.Entity("UMicro.Domain.Modelo.Proyecto", b =>
                 {
                     b.Navigation("ProyectoUsuarioRols");
@@ -454,6 +434,8 @@ namespace UMicro.Persistence.Migrations
             modelBuilder.Entity("UMicro.Domain.Modelo.Rol", b =>
                 {
                     b.Navigation("ProyectoUsuarioRols");
+
+                    b.Navigation("RolPermiso");
 
                     b.Navigation("Usuarios");
                 });

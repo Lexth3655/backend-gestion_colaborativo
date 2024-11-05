@@ -16,6 +16,8 @@ namespace UMicro.Domain.Modelo
         public string descripcionRol { get; set; }
 
         //hace referencia a que un rol puede tener un coleccion de usuarios
+        // Colección de la relación N a N
+        public ICollection<Rol_Permiso> RolPermiso { get; set; } = new List<Rol_Permiso>();
 
         public ICollection<ProyectoUsuarioRol> ProyectoUsuarioRols { get; set; }
 
