@@ -2,7 +2,6 @@
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using UMicro.Core.Features.FProyecto;
-using UMicro.Core.Features.FTableroKanban;
 using UMicro.Domain.Modelo;
 
 namespace UMicro.Api.Controllers
@@ -16,12 +15,36 @@ namespace UMicro.Api.Controllers
         {
             _mediator = mediator;
         }
-
-        [HttpPost]
-        public async Task<Proyecto> Post([FromBody] CreateProyectoCommand command)
+        
+        [HttpPost("AddProyecto")]
+        public async Task<Proyecto> Post([FromBody] CrearProyectoCommand command)
         {
             return await _mediator.Send(command);
         }
+
+        [HttpPut("id")]
+        public async Task<IActionResult> Update(int id, [FromBody] ActualizarProyectoCommand command)
+        {
+            if(id != command.proyectoID)
+            {
+                return BadRequest("El ID del proyecto no coincice");
+            }
+            await _mediator.Send(command);
+        }
+
+        [HttpGet("GetListProyect")]
+        public async Task<Proyecto> Get()
+        {
+            return await _mediator.Send(new ObtenerProyectoPorIdQuery());
+        }
+
+        [HttpPost("UpdateProyecto")]
+        public async Task<Proyecto> Update([FromBody] ActualizarProyectoCommand command)
+        {
+            return await _mediator.Send(command);
+        }
+
         
+
     }
 }

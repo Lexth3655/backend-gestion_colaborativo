@@ -10,12 +10,14 @@ using System.Threading.Tasks;
 
 namespace UMicro.Domain.Modelo
 {
-    public class Permiso: BaseEntity
+    public class Roles: BaseEntity
     {
-        public string nombrePermiso {  get; set; }
+        public string nombreRol {  get; set; }
         public string descripcion { get; set; }
 
-        // Relacion muchos a muchos con Rol
-        public ICollection<Rol_Permiso> Roles_Permiso { get; set; }
+        
+        // Relacion muchos a muchos con permiso 
+        public ICollection<Rol_Permiso> Roles_Permiso { get; set; }      
+
     }
 }

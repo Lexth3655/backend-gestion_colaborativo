@@ -9,9 +9,9 @@ using UMicro.Domain.Modelo;
 
 namespace UMicro.Persistence.Data.Configuration
 {
-    public class ConfigurationRol : IEntityTypeConfiguration<Rol>
+    public class ConfigurationRol : IEntityTypeConfiguration<Roles>
     {
-        public void Configure(EntityTypeBuilder<Rol> rol)
+        public void Configure(EntityTypeBuilder<Roles> rol)
         {
             rol.HasKey(x => x.id);
 

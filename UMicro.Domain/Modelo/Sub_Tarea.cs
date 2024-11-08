@@ -13,12 +13,12 @@ namespace UMicro.Domain.Modelo
 {
     public class Sub_Tarea: BaseEntity
     {
+        public int tareaID { get; set; }
         public string tituloSb {  get; set; }
         public string estadoSb { get; set; }
         
-        [ForeignKey("Tarea")]
-        public int id_tarea { get; set; }
-        public Tarea tarea { get; set; }
+        //relacion de muchos a uno con tarea
+        public Tarea Tareas { get; set; }
 
 
     }

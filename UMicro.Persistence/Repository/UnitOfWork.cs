@@ -13,33 +13,42 @@ namespace UMicro.Persistence.Repository
     {
         private readonly ApplicationDbContext _context;
 
-        public IRepository<Tarea> RepositoryTarea {  get; }
-
-        public IRepository<Permiso> RepositoryPermiso { get; }
-
+        
+        public IRepository<Roles> RepositoryRol { get; }
         public IRepository<Rol_Permiso> RepositoryRol_Permiso { get; }
-
+        public IRepository<Permiso> RepositoryPermiso { get; }
+        
+        public IRepository<Usuario> RepositoryUsuario { get; }
+        public IRepository<UsuarioProyecto> RepositoryUsuarioProyecto { get; }
         public IRepository<Proyecto> RepositoryProyecto { get; }
 
-        public IRepository<Usuario> RepositoryUsuario { get; }
+        public IRepository<Tablero> RepositoryTablero { get; }
+        public IRepository<Tarea> RepositoryTarea { get; }
+        public IRepository<Sub_Tarea> RepositorySubTarea { get; }
 
-        public IRepository<Rol> RepositoryRol { get; }
-
-        public IRepository<TableroKanban> RespositoryTableroKanban { get; }
-
-        IRepository<TableroKanban> IUnitOfWork.RepositoryTableroKanban => throw new NotImplementedException();
+        public IRepository<Comentarios> RepositoryComentarios { get; }
+        public IRepository<Recurso> RepositoryRecurso { get; }
+        public IRepository<Notificacion> RepositoryNotificacion { get; }        
 
         public UnitOfWork(ApplicationDbContext context)
         {
             _context = context;
-            RepositoryTarea = new Repository<Tarea>(context);
-            RepositoryPermiso = new Repository<Permiso>(context); 
+            RepositoryRol = new Repository<Roles>(context);
             RepositoryRol_Permiso = new Repository<Rol_Permiso>(context);
-            RepositoryProyecto = new Repository<Proyecto>(context);
-            RespositoryTableroKanban = new Repository<TableroKanban>(context);
+            RepositoryPermiso = new Repository<Permiso>(context);
+
             RepositoryUsuario = new Repository<Usuario>(context);
-            RepositoryRol = new Repository<Rol>(context);
-            
+            RepositoryUsuarioProyecto = new Repository<UsuarioProyecto>(context);
+            RepositoryProyecto = new Repository<Proyecto>(context);
+
+            RepositoryTablero = new Repository<Tablero>(context);
+            RepositoryTarea = new Repository<Tarea>(context);
+            RepositorySubTarea = new Repository<Sub_Tarea>(context);
+
+            RepositoryComentarios = new Repository<Comentarios>(context);
+            RepositoryRecurso = new Repository<Recurso>(context);
+            RepositoryNotificacion = new Repository<Notificacion>(context);
+
         }
         public async Task SaveChangesAsync()
         {

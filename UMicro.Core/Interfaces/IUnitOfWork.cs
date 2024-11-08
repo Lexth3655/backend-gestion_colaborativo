@@ -1,8 +1,4 @@
-﻿/*
-Fecha de Creacion: 29-10-2024
-Autor: Roberto Alexander Toloza
- */
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -13,14 +9,23 @@ namespace UMicro.Core.Interfaces
 {
     public interface IUnitOfWork
     {
-        public IRepository<Tarea> RepositoryTarea { get; }
-        public IRepository<Permiso> RepositoryPermiso { get; }
+        //Repositorios 
+        public IRepository<Roles> RepositoryRol { get; }
         public IRepository<Rol_Permiso> RepositoryRol_Permiso { get; }
-        public IRepository<Proyecto> RepositoryProyecto { get; }
-        public IRepository<TableroKanban> RepositoryTableroKanban { get; }
+        public IRepository<Permiso> RepositoryPermiso { get; }
+
+
         public IRepository<Usuario> RepositoryUsuario { get; }
-        public IRepository<Rol> RepositoryRol { get; }
-        
+        public IRepository<UsuarioProyecto> RepositoryUsuarioProyecto { get; }
+        public IRepository<Proyecto> RepositoryProyecto { get; }
+        public IRepository<Tablero> RepositoryTablero { get; }
+        public IRepository<Tarea> RepositoryTarea { get; }
+        public IRepository<Sub_Tarea> RepositorySubTarea { get; }
+
+        public IRepository<Comentarios> RepositoryComentarios { get; }
+        public IRepository<Recurso> RepositoryRecurso { get; }
+        public IRepository<Notificacion> RepositoryNotificacion { get; }
+
         Task SaveChangesAsync();
     
     
