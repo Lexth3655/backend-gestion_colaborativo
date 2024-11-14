@@ -12,15 +12,17 @@ namespace UMicro.Domain.Modelo
 {
     public class Proyecto: BaseEntity
     {
+        
         public string nombreProyecto {  get; set; }
         public string descripcionProyecto { get; set; }
         public DateTime fecha_inicio { get; set; }
         public DateTime fecha_fin {  get; set; }
 
-        //hace referencia a que un proyecto puede tener un coleccion
-        public ICollection<ProyectoUsuarioRol> ProyectoUsuarioRols { get; set; }
-
-        public ICollection<TableroKanban> Tableros { get; set; }
+        //Relacion muchos a muchos 
+        public ICollection<UsuarioProyecto> UsuarioProyectos { get; set; } //con usuario
+                                                                           
+        //Relacion uno a muchos 
+        public ICollection<Tablero> Tableros { get; set; }//con tableros
 
     }
 }

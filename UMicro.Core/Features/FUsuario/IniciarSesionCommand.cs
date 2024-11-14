@@ -35,7 +35,7 @@ namespace UMicro.Core.Features.FUsuario
         public async Task<bool> Handle(IniciarSesionCommand request, CancellationToken cancellationToken)
         {
             var user = await Task.Run(() =>
-            _unitOfWork.RepositoryUsuario.GetAll().SingleOrDefault(u => u.email == request.email));
+            _unitOfWork.RepositoryUsuario.GetAll().SingleOrDefault(u => u.correo == request.email));
 
             if (user == null || user.password != request.password)
             {

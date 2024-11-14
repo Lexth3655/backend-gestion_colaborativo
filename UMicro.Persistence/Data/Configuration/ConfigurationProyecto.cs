@@ -13,11 +13,14 @@ namespace UMicro.Persistence.Data.Configuration
     {
         public void Configure(EntityTypeBuilder<Proyecto> proyecto)
         {
+            //definimos la llave primaria
             proyecto.HasKey(x => x.id);
 
-            proyecto.HasMany(u => u.ProyectoUsuarioRols)
-                .WithOne(x => x.proyectoPUR)
-                .HasPrincipalKey(x => x.id);
+            //relacion uno a muchos con tablero
+            proyecto.HasMany(p => p.Tableros)
+                .WithOne(t => t.ProyectoT)
+                .HasForeignKey(t => t.proyectoID);
+                        
         }
     }
 }

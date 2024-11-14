@@ -16,14 +16,12 @@ namespace UMicro.Persistence.Data.Configuration
             //configuracion de la lleve primaria
             builder.HasKey(x => x.id);
 
-            //configuracion de las relaciones entre entidades
-            builder.HasOne(u => u.Rols)
-                .WithMany(r => r.Usuarios)
+            //configuracion de la relacion usuario rol
+            builder.HasOne(u => u.Roles)
+                .WithMany()
                 .HasForeignKey(u => u.id);
 
-            builder.HasMany(u => u.ProyectoUsuarioRols)
-                .WithOne(p => p.usuarioPUR)
-                .HasForeignKey(u => u.usuario_id);
+            
         }
     }
 }

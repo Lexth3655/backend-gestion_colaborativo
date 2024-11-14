@@ -13,21 +13,20 @@ namespace UMicro.Domain.Modelo
 {
     public  class Tarea: BaseEntity
     {
+        public int tableroID { get; set; }//llave foranea
         public string titulo {  get; set; }
         public string descrpcion { get; set; }
         public string prioridad { get; set; }
         public DateTime fecha_inicio { get; set; }
         public DateTime fecha_limite { get; set; }
-        public string estadoT { get; set; }
-        public int recurrente { get; set; }
-        public int tiempo_invertido { get; set; }
-        public int id_proyecto { get; set; }
-        public int id_usuario_propietario { get; set; }
-
-        public int tablero_id { get; set; }
-        public TableroKanban Tablero { get; set; }
-
-        public ICollection<Sub_Tarea> subtareas { get; set; } = new List<Sub_Tarea>();
+        public string estado { get; set; }//Ej: --> Por hacer, En progreso, Completado
+        
+        //relacion mucho a uno
+        public Tablero Tablero { get; set; }
+        //Relacion de uno a muchos
+        public ICollection<Sub_Tarea> Subtareas { get; set; }
+        public ICollection<Comentarios> Comentarios { get; set; }
+        public ICollection<Recurso> Recurso { get; set; }
 
     }
 }

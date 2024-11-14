@@ -13,14 +13,17 @@ namespace UMicro.Domain.Modelo
 {
     public class Usuario: BaseEntity
     {
-        public string nombreU {  get; set; }
-        public string email { get; set; }
+        public string nombre {  get; set; }
+        public string correo { get; set; }
         public string password { get; set; }
-        public DateTime anioCreado { get; set; }
+
         
         public int rolID { get; set; }
-        public Rol Rols { get; set; }
-        public ICollection<ProyectoUsuarioRol> ProyectoUsuarioRols { get; set; } = new List<ProyectoUsuarioRol>();
+        public Roles Roles { get; set; }
+
+        //Relacion muchos a muchos con proyecto
+        public ICollection<UsuarioProyecto> UsuarioProyectos { get; set; }
+        
 
     }
 }

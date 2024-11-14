@@ -13,10 +13,12 @@ namespace UMicro.Domain.Modelo
 {
     public class Rol_Permiso
     {
-        public int id_rol {  get; set; }
-        public int id_permiso { get; set; }
+        //union explicita entre las rol y permiso
+        public int rolID {  get; set; }
+        public Roles Roles { get; set; }
 
-        //relacion de navegacion con rol y permiso
-        public Rol rol { get; set; }
+        public int permisoID { get; set; }
+        public Permiso Permiso { get; set; }
+
     }
 }

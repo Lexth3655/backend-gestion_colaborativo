@@ -14,6 +14,7 @@ namespace UMicro.Persistence.Data.Configuration
         public void Configure(EntityTypeBuilder<Sub_Tarea> builder)
         {
             builder.HasKey(x => x.id);
+            builder.Property(s => s.estadoSb).HasMaxLength(20);
         }
 
     }
