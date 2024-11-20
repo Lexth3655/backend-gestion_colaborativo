@@ -10,7 +10,7 @@ using UMicro.Domain.Modelo;
 
 namespace UMicro.Core.Features.FProyecto
 {
-    public class AgregarComentarioCommand: IRequest<Proyecto>
+    public class CrearProyectoCommand: IRequest<Proyecto>
     {
         public string nombre { get; set; }
         public string descripcion { get; set; }
@@ -18,7 +18,7 @@ namespace UMicro.Core.Features.FProyecto
         public DateTime fechaEnd{  get; set; }
     }
 
-    public class CrearProyectoCommandHandler : IRequestHandler<AgregarComentarioCommand, Proyecto>
+    public class CrearProyectoCommandHandler : IRequestHandler<CrearProyectoCommand, Proyecto>
     {
         private readonly IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
@@ -28,7 +28,7 @@ namespace UMicro.Core.Features.FProyecto
             _mapper = mapper;
             _unitOfWork = unitOfWork;
         }
-        public async Task<Proyecto> Handle(AgregarComentarioCommand request, CancellationToken cancellationToken)
+        public async Task<Proyecto> Handle(CrearProyectoCommand request, CancellationToken cancellationToken)
         {
             var proyecto = new Proyecto
             {
