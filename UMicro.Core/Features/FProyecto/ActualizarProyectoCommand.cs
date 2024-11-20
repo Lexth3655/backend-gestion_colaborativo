@@ -10,7 +10,7 @@ using UMicro.Domain.Modelo;
 
 namespace UMicro.Core.Features.FProyecto
 {
-    public class ActualizarProyectoCommand : IRequest<Proyecto>
+    public class EnviarNotificacionCommand : IRequest<Proyecto>
     {
         public int proyectoID { get; set; }
         public string nombre { get; set; }
@@ -19,7 +19,7 @@ namespace UMicro.Core.Features.FProyecto
         public DateTime fechaEnd { get; set; }
     }
 
-    public class ActualizarProyectoCommandHandler : IRequestHandler<ActualizarProyectoCommand, Proyecto>
+    public class ActualizarProyectoCommandHandler : IRequestHandler<EnviarNotificacionCommand, Proyecto>
     {
         private readonly IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
@@ -29,7 +29,7 @@ namespace UMicro.Core.Features.FProyecto
             _mapper = mapper;
             _unitOfWork = unitOfWork;
         }
-        public async Task<Proyecto> Handle(ActualizarProyectoCommand request, CancellationToken cancellationToken)
+        public async Task<Proyecto> Handle(EnviarNotificacionCommand request, CancellationToken cancellationToken)
         {
             var proyecto = await _unitOfWork.RepositoryProyecto.GetByIdAsync(request.proyectoID);
             proyecto.nombreProyecto = request.nombre;

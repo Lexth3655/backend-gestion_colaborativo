@@ -1,6 +1,7 @@
 
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.OpenApi.Models;
 using UMicro.Core;
 using UMicro.Core.Interfaces;
@@ -20,6 +21,8 @@ builder.Services.AddPersistence();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
+//builder.Services.AddMediatR(typeof(Program).Assembly);
+
 
 var app = builder.Build();
 

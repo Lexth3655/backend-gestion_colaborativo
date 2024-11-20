@@ -32,6 +32,7 @@ namespace UMicro.Persistence.Data
         public object Tareas { get; set; }
         public object Usuarios { get; set; }
         public object Recursos { get; set; }
+        public object Notificaciones { get; set; }
 
         public ApplicationDbContext()
         {
