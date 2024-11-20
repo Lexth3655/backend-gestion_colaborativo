@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using MediatR;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using UMicro.Domain.Modelo;
 using UMicro.Persistence.Data;
@@ -10,104 +11,45 @@ namespace UMicro.Api.Controllers
     [Route("api/[controller]")]
     public class ComentariosController : ControllerBase
     {
-        private readonly ApplicationDbContext _context;
+        private readonly IMediator _mediator;
 
-        public ComentariosController(ApplicationDbContext context)
+        public ComentariosController(IMediator mediator)
         {
-            _context = context;
-        }
-
-        public Task<ActionResult<Comentarios>> AgregarComentarioATarea([FromQuery] int tareaId, [FromQuery] int usuarioId, [FromBody] string contenido)
-        {
-            return AgregarComentarioATarea(tareaId, usuarioId, contenido, _context);
+            _mediator = mediator;
         }
 
         //Agregar un comentario a una tarea
         [HttpPost("AgregarComentarioATarea")]
-        public async Task<ActionResult<Comentarios>> AgregarComentarioATarea(
-            [FromQuery] int tareaId,
-            [FromQuery] int usuarioId,
-            [FromBody] string contenido, ApplicationDbContext _context)
+        public async Task<IActionResult> AgregarComentarioATarea([FromQuery] int tareaId, [FromBody] AgregarComentarioCommand command)
         {
-            var tarea = await _context.Tareas.FindAsync(tareaId);
-            var usuario = await _context.Usuarios.FindAsync(usuarioId);
-
-            if (tarea == null)
-            {
-                return NotFound(new { mensaje = "La tarea no existe." });
-            }
-
-            if (usuario == null)
-            {
-                return NotFound(new { mensaje = "El usuario no existe." });
-            }
-
-            var comentario = new Comentarios
-            {
-                tareaID = tareaId,
-                usuarioID = usuarioId,
-                contenido = contenido,
-            };
-
-            object value = _context.Comentarios.Add(comentario);
-            await _context.SaveChangesAsync();
-
-            return CreatedAtAction(nameof(ObtenerComentariosPorTarea), new { tareaId = tareaId }, comentario);
+            command.TareaId = tareaId; // Asigna la tareaId desde la URL
+            var result = await _mediator.Send(command);
+            return result != null ? Ok(result) : BadRequest("Error al agregar el comentario.");
         }
 
         //Actualizar un comentario
-        [HttpPut("ActualizarComentario")]
-        public async Task<IActionResult> ActualizarComentario(
-            [FromQuery] int id,
-            [FromBody] string nuevoContenido)
+        [HttpPut("ActualizarComentario/{id}")]
+        public async Task<IActionResult> ActualizarComentario(int id, [FromBody] ActualizarComentarioCommand command)
         {
-            var comentario = await _context.Comentarios.FindAsync(id);
-            if (comentario == null)
-            {
-                return NotFound(new { mensaje = "El comentario no existe." });
-            }
-
-            comentario.contenido = nuevoContenido;
-            await _context.SaveChangesAsync();
-
-            return NoContent();
+            command.Id = id; // Asigna el ID del comentario
+            var result = await _mediator.Send(command);
+            return result != null ? Ok(result) : BadRequest("Error al actualizar el comentario.");
         }
 
         //Eliminar un comentario
-        [HttpDelete("EliminarComentario")]
-        public async Task<IActionResult> EliminarComentario([FromQuery] int id)
+        [HttpDelete("EliminarComentario/{id}")]
+        public async Task<IActionResult> EliminarComentario(int id)
         {
-            var comentario = await _context.Comentarios.FindAsync(id);
-            if (comentario == null)
-            {
-                return NotFound(new { mensaje = "El comentario no existe." });
-            }
-
-            _context.Comentarios.Remove(comentario);
-            await _context.SaveChangesAsync();
-
-            return NoContent();
+            var result = await _mediator.Send(new EliminarComentarioCommand { Id = id });
+            return result ? Ok("Comentario eliminado exitosamente.") : NotFound("Comentario no encontrado.");
         }
 
         //Obtener comentarios por tarea
-        [HttpGet("ObtenerComentariosPorTarea")]
-        public async Task<ActionResult<IEnumerable<Comentarios>>> ObtenerComentariosPorTarea([FromQuery] int tareaId)
+        [HttpGet("ObtenerComentariosPorTarea/{tareaId}")]
+        public async Task<IActionResult> ObtenerComentariosPorTarea(int tareaId)
         {
-            var comentarios = await _context.Comentarios
-                .Where(c =>
-                {
-                    return c.tareaID == tareaId;
-                })
-                .Include(c => c.Usuario) // Incluye información del usuario
-                .OrderByDescending(c => c.Id) // Orden por el último comentario
-                .ToListAsync();
-
-            if (!comentarios.Any())
-            {
-                return NotFound(new { mensaje = "No hay comentarios asociados a esta tarea." });
-            }
-
-            return Ok(comentarios);
+            var result = await _mediator.Send(new ObtenerComentariosPorTareaQuery { TareaId = tareaId });
+            return result != null ? Ok(result) : NotFound("No hay comentarios para esta tarea.");
         }
     }
 
