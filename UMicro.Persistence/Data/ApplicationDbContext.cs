@@ -31,6 +31,7 @@ namespace UMicro.Persistence.Data
         public IEnumerable<object> Comentarios { get; set; }
         public object Tareas { get; set; }
         public object Usuarios { get; set; }
+        public object Recursos { get; set; }
 
         public ApplicationDbContext()
         {
