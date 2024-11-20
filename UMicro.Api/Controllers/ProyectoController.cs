@@ -17,7 +17,7 @@ namespace UMicro.Api.Controllers
         }
         
         [HttpPost("AddProyecto")]
-        public async Task<Proyecto> Post([FromBody] CrearProyectoCommand command)
+        public async Task<Proyecto> Post([FromBody] AgregarComentarioCommand command)
         {
             return await _mediator.Send(command);
         }
@@ -39,7 +39,7 @@ namespace UMicro.Api.Controllers
         }
 
         [HttpPost("UpdateProyecto")]
-        public async Task<Proyecto> Update([FromBody] ActualizarProyectoCommand command)
+        public async Task<Proyecto> Update([FromBody] EnviarNotificacionCommand command)
         {
             return await _mediator.Send(command);
         }
