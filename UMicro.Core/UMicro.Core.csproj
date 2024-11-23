@@ -7,6 +7,12 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Features\FRecursos\**" />
+    <EmbeddedResource Remove="Features\FRecursos\**" />
+    <None Remove="Features\FRecursos\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="AutoMapper" Version="13.0.1" />
     <PackageReference Include="MediatR" Version="12.4.1" />
     <PackageReference Include="Microsoft.Extensions.Configuration" Version="8.0.0" />
@@ -15,10 +21,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\UMicro.Domain\UMicro.Domain.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Features\FRecursos\" />
   </ItemGroup>
 
 </Project>
