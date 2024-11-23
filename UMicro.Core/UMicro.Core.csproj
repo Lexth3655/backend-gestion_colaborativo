@@ -16,4 +16,8 @@
     <ProjectReference Include="..\UMicro.Domain\UMicro.Domain.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Features\FRecursos\" />
+  </ItemGroup>
+
 </Project>

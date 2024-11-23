@@ -17,20 +17,20 @@ namespace UMicro.Api.Controllers
         }
         
         [HttpPost("AddProyecto")]
-        public async Task<Proyecto> Post([FromBody] CrearProyectoCommand command)
+        public async Task<Proyecto> Post([FromBody] AgregarComentarioCommand command)
         {
             return await _mediator.Send(command);
         }
 
         [HttpPut("id")]
-        public async Task<IActionResult> Update(int id, [FromBody] ActualizarProyectoCommand command)
-        {
-            if(id != command.proyectoID)
-            {
-                return BadRequest("El ID del proyecto no coincice");
-            }
-            await _mediator.Send(command);
-        }
+        //public async Task<IActionResult> Update(int id, [FromBody] ActualizarProyectoCommand command)
+        //{
+        //    if(id != command.proyectoID)
+        //    {
+        //        return BadRequest("El ID del proyecto no coincice");
+       //     }
+       //     await _mediator.Send(command);
+       // }
 
         [HttpGet("GetListProyect")]
         public async Task<Proyecto> Get()
@@ -39,7 +39,7 @@ namespace UMicro.Api.Controllers
         }
 
         [HttpPost("UpdateProyecto")]
-        public async Task<Proyecto> Update([FromBody] ActualizarProyectoCommand command)
+        public async Task<Proyecto> Update([FromBody] EnviarNotificacionCommand command)
         {
             return await _mediator.Send(command);
         }
