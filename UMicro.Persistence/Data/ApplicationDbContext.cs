@@ -28,6 +28,11 @@ namespace UMicro.Persistence.Data
         public DbSet<Comentarios> comentarios { get; set; }
         public DbSet<Recurso> recursos { get; set; }
         public DbSet<Notificacion> notificacions { get; set; }
+        public IEnumerable<object> Comentarios { get; set; }
+        public object Tareas { get; set; }
+        public object Usuarios { get; set; }
+        public object Recursos { get; set; }
+        public object Notificaciones { get; set; }
 
         public ApplicationDbContext()
         {

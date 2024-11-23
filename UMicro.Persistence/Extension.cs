@@ -15,12 +15,14 @@ namespace UMicro.Persistence
 
             var serviceProvider = services.BuildServiceProvider();
             var configuration = serviceProvider.GetService<IConfiguration>();
+            
             services.AddDbContext<ApplicationDbContext>(opt => opt.UseSqlServer(configuration["sql:cnx"]));
             services.AddTransient<IUnitOfWork, UnitOfWork>();
             services.AddAutoMapper(config =>
             {
                 config.AddProfile<MapperProfile>();
             });
+
             return services;
         }
     }

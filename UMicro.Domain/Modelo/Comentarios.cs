@@ -8,6 +8,8 @@ namespace UMicro.Domain.Modelo
 {
     public class Comentarios : BaseEntity
     {
+        public DateTime FechaCreacion;
+
         public int tareaID { get; set; }
         public int usuarioID { get; set; }
         public string contenido { get; set; }
