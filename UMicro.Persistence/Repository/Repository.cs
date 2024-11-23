@@ -87,5 +87,19 @@ namespace UMicro.Persistence.Repository
                 .ToListAsync();
         }
 
+        public async Task<IEnumerable<Proyecto>> GetProyectosDeUsuarioAsync(int usuarioId)
+        {
+            if (typeof(T) != typeof(Proyecto))
+            {
+                throw new InvalidOperationException("Este método solo puede usarse para el tipo Proyecto.");
+            }
+
+            return await _dbSet
+                .OfType<Proyecto>()
+                .Include(p => p.UsuarioProyectos)
+                .Where(p => p.UsuarioProyectos.Any(up => up.usuarioID == usuarioId))
+                .ToListAsync();
+        }
+
     }
 }
