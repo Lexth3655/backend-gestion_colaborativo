@@ -6,12 +6,14 @@ using System.Text;
 using System.Threading.Tasks;
 using UMicro.Core.Interfaces;
 using UMicro.Domain.Modelo;
+using UMicro.Persistence.Data;
 
 namespace UMicro.Persistence.Repository
 {
     public class Repository<T> : IRepository<T> where T : class
     {
         private readonly DbSet<T> _dbSet;
+        private readonly ApplicationDbContext _context;
         public Repository(DbContext dbContext)
         {
             _dbSet = dbContext.Set<T>();
@@ -31,8 +33,13 @@ namespace UMicro.Persistence.Repository
             });
         }
 
-        public IEnumerable<T> GetAll()
-        {            
+        public async Task<T> FindAsync(params object[] keyValues)
+        {
+            return await _dbSet.FindAsync(keyValues); // Busca por múltiples claves (si es necesario)
+        }
+
+        public IEnumerable<T> GetAllE()
+        {
             return _dbSet.ToList();
         }
 
@@ -54,6 +61,30 @@ namespace UMicro.Persistence.Repository
                 _dbSet.Update(t);
                 return t;
             });
+        }
+
+        public async Task<Usuario> FindByUserNameAsync(string email)
+        {
+
+            return await _context.usuarios.SingleOrDefaultAsync(u => u.correo == email);
+        }
+
+        public async Task<IEnumerable<Permiso>> GetPermisosPorRolAsync(int rolId)
+        {
+            return await _context.rol_Permisos
+                .Where(rp => rp.rolID == rolId)
+                .Include(rp => rp.Permiso)
+                .Select(rp => rp.Permiso)
+                .ToListAsync();
+        }
+
+        public async Task<IEnumerable<Roles>> GetRolesPorPermisoAsync(int permisoId)
+        {
+            return await _context.rol_Permisos
+                .Where(rp => rp.permisoID == permisoId)
+                .Include(rp => rp.Roles)
+                .Select(rp => rp.Roles)
+                .ToListAsync();
         }
     }
 }

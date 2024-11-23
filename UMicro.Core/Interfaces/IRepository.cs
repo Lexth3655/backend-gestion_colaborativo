@@ -16,10 +16,18 @@ namespace UMicro.Core.Interfaces
     public interface IRepository<T> where T : class
     {
         Task<List<T>> GetAllAsync();
-        IEnumerable<T> GetAll(); // mostrar todo para comparar
+        IEnumerable<T> GetAllE();// mostrar todo para comparar
         Task<T> GetByIdAsync(int id); // buscar por id
         Task<T> AddAsync(T t);
         Task<T> UpdateAsync(T t);
         Task<bool> DeleteAsync(T t);
+        Task<T> FindAsync(params object[] keyValues); // busca una entidad por claves
+
+        Task<Usuario> FindByUserNameAsync(string email);
+
+        Task<IEnumerable<Permiso>> GetPermisosPorRolAsync(int rolId);
+        Task<IEnumerable<Roles>> GetRolesPorPermisoAsync(int permisoId);
+
+
     }
 }
