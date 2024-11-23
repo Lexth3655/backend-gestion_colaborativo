@@ -12,7 +12,7 @@ namespace UMicro.Core.Features.FProyecto
 {
     public class ObtenerProyectoPorIdQuery : IRequest<Proyecto>
     {
-        public int proyectoId {  get; set; }
+        public int proyectoId { get; set; }
 
     }
 
@@ -31,12 +31,12 @@ namespace UMicro.Core.Features.FProyecto
         {
             var proyecto = await _unitOfWork.RepositoryProyecto.GetByIdAsync(request.proyectoId);
 
-            
+
             if (proyecto == null)
             {
                 throw new NotImplementedException("Proyecto no encontrado"); ;
             }
-            var p = _mapper.Map<Proyecto>(proyecto);            
+            var p = _mapper.Map<Proyecto>(proyecto);
             await _unitOfWork.SaveChangesAsync();
 
             return p;

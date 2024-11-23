@@ -10,12 +10,12 @@ using UMicro.Domain.Modelo;
 
 namespace UMicro.Core.Features.FProyecto
 {
-    public class CrearProyectoCommand: IRequest<Proyecto>
+    public class CrearProyectoCommand : IRequest<Proyecto>
     {
         public string nombre { get; set; }
         public string descripcion { get; set; }
-        public DateTime fechaStar{ get; set; }
-        public DateTime fechaEnd{  get; set; }
+        public DateTime fechaStar { get; set; }
+        public DateTime fechaEnd { get; set; }
     }
 
     public class CrearProyectoCommandHandler : IRequestHandler<CrearProyectoCommand, Proyecto>
@@ -28,6 +28,7 @@ namespace UMicro.Core.Features.FProyecto
             _mapper = mapper;
             _unitOfWork = unitOfWork;
         }
+
         public async Task<Proyecto> Handle(CrearProyectoCommand request, CancellationToken cancellationToken)
         {
             var proyecto = new Proyecto
@@ -39,11 +40,12 @@ namespace UMicro.Core.Features.FProyecto
                 fecha_creado = DateTime.Now,
                 activo = true
             };
-            var p = _mapper.Map<Proyecto> (proyecto);
+            var p = _mapper.Map<Proyecto>(proyecto);
             await _unitOfWork.RepositoryProyecto.AddAsync(proyecto);
             await _unitOfWork.SaveChangesAsync();
 
             return p; // Retorna el ID del nuevo proyecto
         }
     }
+
 }

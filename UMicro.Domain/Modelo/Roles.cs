@@ -17,7 +17,7 @@ namespace UMicro.Domain.Modelo
 
         
         // Relacion muchos a muchos con permiso 
-        public ICollection<Rol_Permiso> Roles_Permiso { get; set; }      
-
+        public ICollection<Rol_Permiso> Roles_Permiso { get; set; }
+        public int id { get; set; }
     }
 }

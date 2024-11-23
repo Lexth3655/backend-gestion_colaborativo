@@ -29,20 +29,31 @@ namespace UMicro.Core.Features.FProyecto
             _mapper = mapper;
             _unitOfWork = unitOfWork;
         }
+
         public async Task<Proyecto> Handle(ActualizarProyectoCommand request, CancellationToken cancellationToken)
         {
+            // Obtener el proyecto por ID
             var proyecto = await _unitOfWork.RepositoryProyecto.GetByIdAsync(request.proyectoID);
+
+            // Verificar si el proyecto existe
+            if (proyecto == null)
+            {
+                return null; // O lanzar una excepción si prefieres
+            }
+
+            // Actualizar las propiedades del proyecto
             proyecto.nombreProyecto = request.nombre;
             proyecto.descripcionProyecto = request.descripcion;
             proyecto.fecha_inicio = request.fechaStar;
             proyecto.fecha_fin = request.fechaEnd;
 
-            var p = _mapper.Map<Proyecto>(proyecto);
+            // Guardar los cambios en el repositorio
             await _unitOfWork.RepositoryProyecto.UpdateAsync(proyecto);
             await _unitOfWork.SaveChangesAsync();
 
-            return p; // Retorna el ID del nuevo proyecto
+            // Retornar el objeto actualizado
+            return proyecto; // No es necesario usar AutoMapper
         }
-
     }
+
 }

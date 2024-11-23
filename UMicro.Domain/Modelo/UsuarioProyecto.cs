@@ -13,11 +13,13 @@ namespace UMicro.Domain.Modelo
         public Usuario Usuario { get; set; }
         public int proyectoID { get; set; }
         public Proyecto Proyecto { get; set; }
+        public DateTime FechaAsignacion { get; set; } // Ejemplo de una propiedad real
 
         //Rol especifico del usuario en el proyecto
         public int rolID { get; set; }
         public Roles Roles { get; set; }
 
+       
 
 
     }
