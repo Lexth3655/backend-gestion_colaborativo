@@ -65,7 +65,7 @@ namespace UMicro.Api.Controllers
 
         // Asignar un permiso a un rol
         [HttpPost("AsignarPermiso")]
-        public async Task<IActionResult> AsignarPermisoARol([FromBody] AsignarPermisoARolCommand command)
+        public async Task<IActionResult> AsignarPermisoARol([FromBody] AsignarPermisoARol command)
         {
             var result = await _mediator.Send(command);
             if (!result) return BadRequest("La asignación del permiso falló.");
@@ -74,7 +74,7 @@ namespace UMicro.Api.Controllers
 
         // Eliminar un permiso de un rol
         [HttpDelete("EliminarPermiso")]
-        public async Task<IActionResult> EliminarPermisoDeRol([FromBody] EliminarPermisoDeRolCommand command)
+        public async Task<IActionResult> EliminarPermisoDeRol([FromBody] EliminarPermisoDeRol command)
         {
             var result = await _mediator.Send(command);
             if (!result) return NotFound("La relación entre el rol y el permiso no fue encontrada.");

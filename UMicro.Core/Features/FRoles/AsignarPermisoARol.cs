@@ -9,13 +9,13 @@ using UMicro.Domain.Modelo;
 
 namespace UMicro.Core.Features.FRoles
 {
-    public class AsignarPermisoARolCommand : IRequest<bool>
+    public class AsignarPermisoARol : IRequest<bool>
     {
         public int RolId { get; set; }
         public int PermisoId { get; set; }
     }
 
-    public class AsignarPermisoARolCommandHandler : IRequestHandler<AsignarPermisoARolCommand, bool>
+    public class AsignarPermisoARolCommandHandler : IRequestHandler<AsignarPermisoARol, bool>
     {
         private readonly IUnitOfWork _unitOfWork;
 
@@ -24,7 +24,7 @@ namespace UMicro.Core.Features.FRoles
             _unitOfWork = unitOfWork;
         }
 
-        public async Task<bool> Handle(AsignarPermisoARolCommand request, CancellationToken cancellationToken)
+        public async Task<bool> Handle(AsignarPermisoARol request, CancellationToken cancellationToken)
         {
             var rolPermiso = new Rol_Permiso { rolID = request.RolId, permisoID = request.PermisoId };
             await _unitOfWork.RepositoryRol_Permiso.AddAsync(rolPermiso);

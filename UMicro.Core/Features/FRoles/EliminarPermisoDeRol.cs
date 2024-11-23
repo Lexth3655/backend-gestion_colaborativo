@@ -8,22 +8,22 @@ using UMicro.Core.Interfaces;
 
 namespace UMicro.Core.Features.FRoles
 {
-    public class EliminarPermisoDeRolCommand : IRequest<bool>
+    public class EliminarPermisoDeRol : IRequest<bool>
     {
         public int RolId { get; set; }
         public int PermisoId { get; set; }
     }
 
-    public class EliminarPermisoDeRolCommandHandler : IRequestHandler<EliminarPermisoDeRolCommand, bool>
+    public class EliminarPermisoDeRolHandler : IRequestHandler<EliminarPermisoDeRol, bool>
     {
         private readonly IUnitOfWork _unitOfWork;
 
-        public EliminarPermisoDeRolCommandHandler(IUnitOfWork unitOfWork)
+        public EliminarPermisoDeRolHandler(IUnitOfWork unitOfWork)
         {
             _unitOfWork = unitOfWork;
         }
 
-        public async Task<bool> Handle(EliminarPermisoDeRolCommand request, CancellationToken cancellationToken)
+        public async Task<bool> Handle(EliminarPermisoDeRol request, CancellationToken cancellationToken)
         {
             var rolPermiso = await _unitOfWork.RepositoryRol_Permiso
                 .FindAsync(request.RolId , request.PermisoId);
