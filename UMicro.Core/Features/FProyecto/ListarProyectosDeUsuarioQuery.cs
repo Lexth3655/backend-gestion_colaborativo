@@ -27,7 +27,7 @@ namespace UMicro.Core.Features.FProyecto
         public async Task<IEnumerable<Proyecto>> Handle(ListarProyectosDeUsuarioQuery request, CancellationToken cancellationToken)
         {
             // Obtener los proyectos del usuario mediante el repositorio
-            var proyectos = await _unitOfWork.RepositoryUsuarioProyecto.(request.UsuarioId);
+            var proyectos = await _unitOfWork.RepositoryUsuarioProyecto.GetProyectosDeUsuarioAsync(request.UsuarioId);
 
             if (proyectos == null || !proyectos.Any())
                 throw new KeyNotFoundException("El usuario no participa en ningún proyecto.");

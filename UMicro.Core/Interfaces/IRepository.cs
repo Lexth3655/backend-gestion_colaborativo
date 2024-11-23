@@ -25,6 +25,8 @@ namespace UMicro.Core.Interfaces
 
         Task<Usuario> FindByUserNameAsync(string email);
 
+
+        Task<IEnumerable<Proyecto>> GetProyectosDeUsuarioAsync(int usuarioId);
         Task<IEnumerable<Permiso>> GetPermisosPorRolAsync(int rolId);
         Task<IEnumerable<Roles>> GetRolesPorPermisoAsync(int permisoId);
 
