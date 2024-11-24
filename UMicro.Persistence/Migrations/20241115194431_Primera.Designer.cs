@@ -12,8 +12,13 @@ using UMicro.Persistence.Data;
 namespace UMicro.Persistence.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
+<<<<<<<< HEAD:UMicro.Persistence/Migrations/20241115194431_Primera.Designer.cs
     [Migration("20241115194431_Primera")]
     partial class Primera
+========
+    [Migration("20241108102408_pruebadelmodelo")]
+    partial class pruebadelmodelo
+>>>>>>>> b59d3887fd5b4654d74ae02a647d7d3575531875:UMicro.Persistence/Migrations/20241108102408_pruebadelmodelo.Designer.cs
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
