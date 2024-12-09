@@ -16,20 +16,21 @@ namespace UMicro.Core.Features.FComentario
     }
     public class EliminarComentarioHandler : IRequestHandler<EliminarComentarioCommand, bool>
     {
-        private readonly ApplicationDbContext _context;
-
-        public EliminarComentarioHandler(ApplicationDbContext context)
+        private readonly IUnitOfWork _unitOfWork;
+        private readonly IMapper _mapper;
+        public EliminarComentarioHandler(IUnitOfWork unitOfWork, IMapper mapper)
         {
-            _context = context;
+            _mapper = mapper;
+            _unitOfWork = unitOfWork;
         }
 
         public async Task<bool> Handle(EliminarComentarioCommand request, CancellationToken cancellationToken)
         {
-            var comentario = await _context.Comentarios.FindAsync(request.Id);
+            var comentario = await _unitOfWork.RepositoryComentarios.GetByIdAsync(request.Id);
             if (comentario == null) return false;
 
-            _context.Comentarios.Remove(comentario);
-            await _context.SaveChangesAsync(cancellationToken);
+            await _unitOfWork.RepositoryComentarios.DeleteAsync(comentario);
+            await _unitOfWork.SaveChangesAsync();
             return true;
         }
     }

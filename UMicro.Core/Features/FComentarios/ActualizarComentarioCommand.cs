@@ -17,20 +17,23 @@ namespace UMicro.Core.Features.FComentario
     }
     public class ActualizarComentarioHandler : IRequestHandler<ActualizarComentarioCommand, Comentarios>
     {
-        private readonly ApplicationDbContext _context;
+        private readonly IUnitOfWork _unitOfWork;
+        private readonly IMapper _mapper;
 
-        public ActualizarComentarioHandler(ApplicationDbContext context)
+
+        public ActualizarComentarioHandler( IUnitOfWork unitOfWork, IMapper mapper)
         {
-            _context = context;
+            _mapper = mapper;
+            _unitOfWork = unitOfWork;
         }
 
         public async Task<Comentarios> Handle(ActualizarComentarioCommand request, CancellationToken cancellationToken)
         {
-            var comentario = await _context.Comentarios.FindAsync(request.Id);
+            var comentario = await _unitOfWork.UpdateAsync(request.Id);
             if (comentario == null) return null;
 
             comentario.contenido = request.NuevoContenido;
-            await _context.SaveChangesAsync(cancellationToken);
+            await _unitOfWork.SaveChangesAsync();
             return comentario;
         }
     }

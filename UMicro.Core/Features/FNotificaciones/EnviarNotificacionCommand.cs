@@ -1,10 +1,5 @@
 ﻿using AutoMapper;
 using MediatR;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using UMicro.Core.Features.FNotificaciones;
 using UMicro.Core.Interfaces;
 using UMicro.Domain.Modelo;
@@ -21,11 +16,24 @@ namespace UMicro.Core.Features.FNotificaciones
 
 public class EnviarNotificacionHandler: IRequestHandler<EnviarNotificacionCommand, Notificacion>
 {
-    private readonly ApplicationDbContext _context;
+    private readonly IUnitOfWork _unitOfWork;
+    private readonly IMapper _mapper;
+
+
+    public EnviarNotificacionHandler(IUnitOfWork unitOfWork, IMapper mapper)
+    {
+        _mapper = mapper;
+        _unitOfWork = unitOfWork;
+    }
+
+    //public Task<Notificacion> Handle(EnviarNotificacionCommand request, CancellationToken cancellationToken)
+    //{
+    //    throw new NotImplementedException();
+    //}
 
     public async Task<Notificacion> Handle(EnviarNotificacionCommand request, CancellationToken cancellationToken)
     {
-        var usuario = await _context.Usuarios.FindAsync(request.UserId);
+        var usuario = await _unitOfWork.RepositoryNotificacion.GetByIdAsync(request.UserId);
         if (usuario == null) return null;
 
         var notificacion = new Notificacion
@@ -36,8 +44,8 @@ public class EnviarNotificacionHandler: IRequestHandler<EnviarNotificacionComman
             fechaEnvio = DateTime.UtcNow
         };
 
-        _context.Notificaciones.Add(notificacion);
-        await _context.SaveChangesAsync(cancellationToken);
+        await _unitOfWork.RepositoryNotificacion.AddAsync(notificacion);
+        await _unitOfWork.SaveChangesAsync();
 
         return notificacion;
     }

@@ -18,14 +18,26 @@ namespace UMicro.Core.Features.FNotificaciones
 }
 public class ObtenerNotificacionesPorUsuarioHandler : IRequestHandler<ObtenerNotificacionesPorUsuarioQuery, List<Notificacion>>
 {
-    private readonly ApplicationDbContext _context;
+    private readonly IUnitOfWork _unitOfWork;
+    private readonly IMapper _mapper;
+    public ObtenerNotificacionesPorUsuarioHandler(IUnitOfWork unitOfWork, IMapper mapper)
+    {
+        _mapper = mapper;
+        _unitOfWork = unitOfWork;
+    }
+
+    //public Task<List<Notificacion>> Handle(ObtenerNotificacionesPorUsuarioQuery request, CancellationToken cancellationToken)
+    //{
+    //    throw new NotImplementedException();
+    //}
 
     public async Task<List<Notificacion>> Handle(ObtenerNotificacionesPorUsuarioQuery request, CancellationToken cancellationToken)
     {
-        return await _context.Notificaciones
+        var ListNotificacion = _unitOfWork.RepositoryNotificacion.GetAll();
+        return ListNotificacion
             .Where(n => n.userID == request.UserId)
             .OrderByDescending(n => n.fechaEnvio)
-            .ToListAsync(cancellationToken);
+            .ToList();
     }
 }
 

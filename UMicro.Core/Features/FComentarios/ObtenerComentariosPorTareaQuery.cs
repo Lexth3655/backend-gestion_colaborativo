@@ -17,19 +17,23 @@ namespace UMicro.Core.Features.FComentario
 
     public class ObtenerComentariosPorTareaHandler : IRequestHandler<ObtenerComentariosPorTareaQuery, List<Comentarios>>
     {
-        private readonly ApplicationDbContext _context;
+        private readonly IUnitOfWork _unitOfWork;
+        private readonly IMapper _mapper;
+        //private readonly ApplicationDbContext _context;
 
-        public ObtenerComentariosPorTareaHandler(ApplicationDbContext context)
+        public ObtenerComentariosPorTareaHandler(IUnitOfWork unitOfWork, IMapper mapper)
         {
-            _context = context;
+            _mapper = mapper;
+            _unitOfWork = unitOfWork;
         }
 
         public async Task<List<Comentarios>> Handle(ObtenerComentariosPorTareaQuery request, CancellationToken cancellationToken)
         {
-            return await _context.Comentarios
+            var ListComentario =  _unitOfWork.RepositoryComentarios.GetAll();
+           return ListComentario
                 .Where(c => c.tareaID == request.TareaId)
                 .OrderByDescending(c => c.FechaCreacion)
-                .ToListAsync(cancellationToken);
+                .ToList();
         }
     }
 
@@ -37,4 +41,4 @@ namespace UMicro.Core.Features.FComentario
 
 
 
-}
+
