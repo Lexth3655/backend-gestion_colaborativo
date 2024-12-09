@@ -1,6 +1,7 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using UMicro.Core.Features.FNotificaciones;
 using UMicro.Core.Features.FProyecto;
 using UMicro.Domain.Modelo;
 using UMicro.Persistence.Data;
@@ -36,7 +37,7 @@ namespace UMicro.Api.Controllers
             return result != null ? Ok(result) : BadRequest("Error al programar la notificación.");
         }
 
-        //Obtener notificaciones por usuario
+       // Obtener notificaciones por usuario
         [HttpGet("ObtenerNotificacionesPorUsuario/{userId}")]
         public async Task<IActionResult> ObtenerNotificacionesPorUsuario(int userId)
         {

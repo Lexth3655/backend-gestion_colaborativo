@@ -1,14 +1,16 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using UMicro.Core.Features.FComentario;
 using UMicro.Domain.Modelo;
 using UMicro.Persistence.Data;
 
 namespace UMicro.Api.Controllers
+{ 
 
-{
-    [ApiController]
-    [Route("api/[controller]")]
+   [Route("api/[controller]")]
+   [ApiController]
+   
     public class ComentariosController : ControllerBase
     {
         private readonly IMediator _mediator;
@@ -17,14 +19,13 @@ namespace UMicro.Api.Controllers
         {
             _mediator = mediator;
         }
-
         //Agregar un comentario a una tarea
         [HttpPost("AgregarComentarioATarea")]
-        public async Task<IActionResult> AgregarComentarioATarea([FromQuery] int tareaId, [FromBody] AgregarComentarioCommand command)
-        {
-            command.TareaId = tareaId; // Asigna la tareaId desde la URL
-            var result = await _mediator.Send(command);
-            return result != null ? Ok(result) : BadRequest("Error al agregar el comentario.");
+        public async Task<IActionResult> AgregarComentarioATarea([FromQuery] int tareaId, [FromBody] AgregarRecursoATareaCommand command)
+         {
+        command.TareaId = tareaId; // Asigna la tareaId desde la URL
+        var result = await _mediator.Send(command);
+         return result != null ? Ok(result) : BadRequest("Error al agregar el comentario.");
         }
 
         //Actualizar un comentario
@@ -52,7 +53,4 @@ namespace UMicro.Api.Controllers
             return result != null ? Ok(result) : NotFound("No hay comentarios para esta tarea.");
         }
     }
-
-
-
 }
